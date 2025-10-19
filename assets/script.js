@@ -22,12 +22,11 @@ const display = document.getElementById('display');
 const btns = document.querySelectorAll('.buttons button');
 
 function press(number) {
-    if (display.innerText === '0') {
+    if (display.innerText === '0' || display.innerText === "ERROR") {
         display.innerText = number;
     }
     else {
         display.innerText += number;
-        display.scrollLeft = display.scrollWidth;
     }
 }
 
@@ -79,7 +78,7 @@ clear.onclick = function() {
     display.innerText = '';
 }
 point.onclick = function() {
-    press('.');
+    display.innerText += '.';
 }
 percentage.onclick = function() {
     let currentValue = parseFloat(display.innerText);
