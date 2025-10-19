@@ -99,7 +99,6 @@ sign.onclick = function() {
         display.innerText = "ERROR";
         return;
     }
-    currentValue = eval(currentValue);
     let result = currentValue * -1;
     display.innerText = result.toString();
 }
