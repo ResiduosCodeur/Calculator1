@@ -1,5 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-
 const one = document.getElementById('one');
 const two = document.getElementById('two');
 const three = document.getElementById('three');
@@ -21,12 +19,15 @@ const equal = document.getElementById('equal');
 const point = document.getElementById('point');
 const display = document.getElementById('display');
 
+const btns = document.querySelectorAll('.buttons button');
+
 function press(number) {
     if (display.innerText === '0') {
         display.innerText = number;
     }
     else {
         display.innerText += number;
+        display.scrollLeft = display.scrollWidth;
     }
 }
 
@@ -81,9 +82,59 @@ point.onclick = function() {
     press('.');
 }
 percentage.onclick = function() {
-    press('%');
+    let currentValue = parseFloat(display.innerText);
+
+    if (isNaN(currentValue)) {
+        display.innerText = "ERROR";
+        return;
+    }
+    
+    let result = currentValue/100;
+    display.innerText = result.toString();  
 }
+
+sign.onclick = function() {
+    let currentValue = parseFloat(display.innerText);
+
+    if (isNaN(currentValue)) {
+        display.innerText = "ERROR";
+        return;
+    }
+    currentValue = eval(currentValue);
+    let result = currentValue * -1;
+    display.innerText = result.toString();
+}
+
 equal.onclick = function() {
-	display.innerText = eval(display.innerText);
+    let expression = display.innerText;
+
+    try {
+        expression = expression.replace(/×/g, '*');
+        expression = expression.replace(/÷/g, '/');
+    }
+    catch (e) {
+        display.innerText = "ERROR";
+    }
+
+    let result = eval(expression);
+
+	display.innerText = result.toString();
 };
-})
+
+
+function onpress(event) {
+    event.currentTarget.style.boxShadow = '-1px 1px 5px #aaaaaa';
+    
+}
+
+function onrelease(event) {
+    event.currentTarget.style.boxShadow = '-2px 2px 5px #aaaaaa';
+}
+btns.forEach(btn => { 
+btn.addEventListener('mousedown', onpress);
+btn.addEventListener('mouseup', onrelease);
+btn.addEventListener('touchstart', onpress);
+btn.addEventListener('touchend', onrelease);
+
+});
+
