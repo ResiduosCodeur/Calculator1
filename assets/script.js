@@ -111,14 +111,16 @@ equal.onclick = function() {
     try {
         expression = expression.replace(/×/g, '*');
         expression = expression.replace(/÷/g, '/');
+
+        let result = eval(expression);
+
+	    display.innerText = result.toString();
     }
     catch (e) {
         display.innerText = "ERROR";
     }
 
-    let result = eval(expression);
-
-	display.innerText = result.toString();
+   
 };
 
 
